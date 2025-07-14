@@ -27,6 +27,8 @@ Complete suite for training and analyzing YOLOv10 / YOLOv12 models with support 
 
 Make sure you have the following files:
 - `train_yolo.py` - Main training script with ablation studies
+- `gen_dataset_v2.py` - Dataset creation and sampling tool
+- `img_2_gray.py` - Image to grayscale conversion tool
 - `requirements.txt` - Python dependencies
 - `export_metrics.py` - Metrics export script
 - `plot_curves.py` - Training curves plotting script
@@ -77,6 +79,8 @@ python train_yolo.py --help
 ```
 project/
 ├── train_yolo.py                 # Main training script with ablation
+├── gen_dataset_v2.py             # Dataset creation tool
+├── img_2_gray.py                 # Image to grayscale conversion
 ├── requirements.txt                  # Dependencies
 ├── export_metrics.py                # Metrics export
 ├── plot_curves.py                   # Training curves plotting
@@ -182,6 +186,124 @@ The project includes various configurations for ablation studies:
 ### Supported Datasets
 - **d3_gray_dataset**: D3 grayscale dataset
 - **DVM_1_Grey_dataset**: DVM-1 grayscale dataset
+
+## Dataset Creation Tool
+
+The project includes `gen_dataset_v2.py`, a powerful script for creating new datasets by combining and sampling from existing datasets.
+
+### Features
+- **Selective Sampling**: Choose specific number of images from multiple source datasets
+- **Automatic Split**: Maintains train/validation/test split ratios
+- **Label Verification**: Ensures image-label correspondence
+- **Progress Tracking**: Real-time progress bars for dataset creation
+- **Summary Reports**: Generates detailed statistics and contribution analysis
+- **Error Handling**: Validates dataset availability before processing
+
+### Usage
+
+```bash
+python gen_dataset_v2.py --dictionary "{dataset_dict}" --new-dataset "dataset_name" --split-ratio "[train,val,test]"
+```
+
+### Parameters
+
+| Parameter | Description | Required | Format |
+|-----------|-------------|-----------|---------|
+| `--dictionary` | Dictionary specifying source datasets and image counts | ✅ | `'{"dataset1": count1, "dataset2": count2}'` |
+| `--new-dataset` | Name of the new dataset to create | ✅ | String |
+| `--split-ratio` | Train/validation/test split percentages | ✅ | `"[70,15,15]"` |
+
+### Example: Creating DVM1 Dataset
+
+Real command used to create the DVM1 dataset:
+
+```bash
+python gen_dataset_v2.py --dictionary "{'/datasets/S2_DETECTION_YOLO_png_640px': 1747, '/datasets/S2_DETECTION_YOLO_png_640px_rot': 3172, '/datasets/S2_DETECTION_YOLO_png_640px_rot_rot': 5963, '/datasets/S2_DETECTION_YOLO_png_640px_rot_rot_spe': 11919, '/datasets/S2_FC_png_640px': 1295, '/datasets/S2_FC_png_640px_rot': 2080, '/datasets/S2_FC_png_640px_rot_rot': 3596, '/datasets/S2_FC_png_640px_rot_rot_spe': 7164, '/datasets/SDAI_YOLO_png_640px': 621, '/datasets/SDAI_YOLO_png_640px_rot': 1230, '/datasets/SDAI_YOLO_png_640px_rot_rot': 2448, '/datasets/SDAI_YOLO_png_640px_rot_rot_spe': 4894}" --new-dataset DVM_1 --split-ratio "[70,15,15]"
+```
+
+### Output Structure
+
+The script creates:
+- **Dataset Directory**: `DVM_1/` with standard YOLO structure
+  - `images/train/`, `images/val/`, `images/test/`
+  - `labels/train/`, `labels/val/`, `labels/test/`
+- **Summary Report**: `DVM_1.txt` with detailed statistics
+- **Console Output**: Real-time progress and final summary
+
+### Summary Report Contents
+- Image counts per source dataset and split
+- Contribution percentages to total dataset
+- Label verification results
+- Total dataset statistics
+
+## Image Grayscale Conversion Tool
+
+The project includes `img_2_gray.py`, a high-performance script for converting entire datasets to grayscale while preserving the complete directory structure.
+
+### Features
+- **Parallel Processing**: Multi-threaded conversion for optimal performance
+- **Structure Preservation**: Maintains original directory hierarchy
+- **Label Verification**: Ensures image-label correspondence after conversion
+- **Progress Tracking**: Real-time progress bars for conversion process
+- **File Type Detection**: Automatic image format recognition
+- **Error Handling**: Robust file processing with detailed feedback
+
+### Usage
+
+```bash
+python img_2_gray.py --path /path/to/dataset
+```
+
+### Parameters
+
+| Parameter | Description | Required | Format |
+|-----------|-------------|-----------|---------|
+| `--path` | Path to the input dataset directory | ✅ | String (absolute or relative path) |
+
+### Example: Converting DVM1 to Grayscale
+
+Convert the DVM1 dataset to grayscale version:
+
+```bash
+python img_2_gray.py --path DVM_1
+```
+
+### Process Details
+
+1. **Input Validation**: Verifies source directory exists
+2. **Output Creation**: Creates new directory with `_Grey` suffix (e.g., `DVM_1_Grey`)
+3. **Parallel Conversion**: Uses ThreadPoolExecutor for multi-core processing
+4. **Image Processing**: Converts images to grayscale ('L' mode) using PIL
+5. **Non-Image Files**: Copies other files (labels, configs) unchanged
+6. **Label Verification**: Final check ensures all images have corresponding `.txt` labels
+
+### Output Structure
+
+For input dataset `DVM_1`, creates:
+```
+DVM_1_Grey/
+├── images/
+│   ├── train/          # Grayscale images
+│   ├── val/            # Grayscale images  
+│   └── test/           # Grayscale images
+└── labels/
+    ├── train/          # Unchanged label files
+    ├── val/            # Unchanged label files
+    └── test/           # Unchanged label files
+```
+
+### Supported Image Formats
+- JPEG (`.jpg`, `.jpeg`)
+- PNG (`.png`)
+- BMP (`.bmp`)
+- TIFF (`.tiff`, `.tif`)
+- GIF (`.gif`)
+
+### Performance Features
+- **Multi-threading**: Leverages multiple CPU cores
+- **Memory Efficient**: Processes images one at a time
+- **Progress Monitoring**: Real-time conversion progress
+- **Automatic Verification**: Post-conversion label validation
 
 ## Pre-trained Weights
 
