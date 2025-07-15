@@ -62,3 +62,28 @@ training:
   save: True
   verbose: True
   save_period: 10
+
+#                   from  n    params  module                                       arguments
+#  0                  -1  1       928  ultralytics.nn.modules.conv.Conv             [3, 32, 3, 2]
+#  1                  -1  1     18560  ultralytics.nn.modules.conv.Conv             [32, 64, 3, 2]
+#  2                  -1  1     26080  ultralytics.nn.modules.block.C3k2            [64, 128, 1, False, 0.25]
+#  3                  -1  1    147712  ultralytics.nn.modules.conv.Conv             [128, 128, 3, 2]
+#  4                  -1  1    103360  ultralytics.nn.modules.block.C3k2            [128, 256, 1, False, 0.25]
+#  5                  -1  1    590336  ultralytics.nn.modules.conv.Conv             [256, 256, 3, 2]
+#  6                  -1  2    689408  ultralytics.nn.modules.block.A2C2f           [256, 256, 2, True, 4]
+#  7                  -1  1   1180672  ultralytics.nn.modules.conv.Conv             [256, 512, 3, 2]
+#  8                  -1  2   2689536  ultralytics.nn.modules.block.A2C2f           [512, 512, 2, True, 1]
+#  9                  -1  1         0  torch.nn.modules.upsampling.Upsample         [None, 2, 'nearest']
+# 10             [-1, 6]  1         0  ultralytics.nn.modules.conv.Concat           [1]
+# 11                  -1  1    345856  ultralytics.nn.modules.block.A2C2f           [768, 256, 1, False, -1]
+# 12                  -1  1         0  torch.nn.modules.upsampling.Upsample         [None, 2, 'nearest']
+# 13             [-1, 4]  1         0  ultralytics.nn.modules.conv.Concat           [1]
+# 14                  -1  1     95104  ultralytics.nn.modules.block.A2C2f           [512, 128, 1, False, -1]
+# 15                  -1  1    147712  ultralytics.nn.modules.conv.Conv             [128, 128, 3, 2]
+# 16            [-1, 11]  1         0  ultralytics.nn.modules.conv.Concat           [1]
+# 17                  -1  1    296704  ultralytics.nn.modules.block.A2C2f           [384, 256, 1, False, -1]
+# 18                  -1  1    590336  ultralytics.nn.modules.conv.Conv             [256, 256, 3, 2]
+# 19             [-1, 8]  1         0  ultralytics.nn.modules.conv.Concat           [1]
+# 20                  -1  1   1511424  ultralytics.nn.modules.block.C3k2            [768, 512, 1, True]
+# 21        [14, 17, 20]  1    819795  ultralytics.nn.modules.head.Detect           [1, [128, 256, 512]]
+#YOLOv12sNormal summary: 272 layers, 9,253,523 parameters, 9,253,507 gradients, 21.5 GFLOPs

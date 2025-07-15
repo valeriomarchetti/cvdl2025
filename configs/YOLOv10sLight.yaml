@@ -36,7 +36,7 @@ head:
   # - [[-1, 10], 1, Concat, [1]] # cat head P5
   # - [-1, 3, C2fCIB, [1024, True, True]] # 22 (P5/32-large)
 
-  - [[16], 1, v10Detect, [nc]] # Detect(P3, P4, P5)
+  - [[16], 1, v10Detect, [nc]] # v10Detect(P3)
 
 training:
   task: detect
@@ -56,3 +56,25 @@ training:
   save: True
   verbose: True
   save_period: 10
+
+
+#                   from  n    params  module                                       arguments
+#  0                  -1  1       928  ultralytics.nn.modules.conv.Conv             [3, 32, 3, 2]
+#  1                  -1  1     18560  ultralytics.nn.modules.conv.Conv             [32, 64, 3, 2]
+#  2                  -1  1     29056  ultralytics.nn.modules.block.C2f             [64, 64, 1, True]
+#  3                  -1  1     73984  ultralytics.nn.modules.conv.Conv             [64, 128, 3, 2]
+#  4                  -1  2    197632  ultralytics.nn.modules.block.C2f             [128, 128, 2, True]
+#  5                  -1  1     36096  ultralytics.nn.modules.block.SCDown          [128, 256, 3, 2]
+#  6                  -1  2    788480  ultralytics.nn.modules.block.C2f             [256, 256, 2, True]
+#  7                  -1  1    137728  ultralytics.nn.modules.block.SCDown          [256, 512, 3, 2]
+#  8                  -1  1    958464  ultralytics.nn.modules.block.C2fCIB          [512, 512, 1, True, True]
+#  9                  -1  1    656896  ultralytics.nn.modules.block.SPPF            [512, 512, 5]
+# 10                  -1  1    990976  ultralytics.nn.modules.block.PSA             [512, 512]
+# 11                  -1  1         0  torch.nn.modules.upsampling.Upsample         [None, 2, 'nearest']
+# 12             [-1, 6]  1         0  ultralytics.nn.modules.conv.Concat           [1]
+# 13                  -1  1    591360  ultralytics.nn.modules.block.C2f             [768, 256, 1]
+# 14                  -1  1         0  torch.nn.modules.upsampling.Upsample         [None, 2, 'nearest']
+# 15             [-1, 4]  1         0  ultralytics.nn.modules.conv.Concat           [1]
+# 16                  -1  1    148224  ultralytics.nn.modules.block.C2f             [384, 128, 1]
+# 17                [16]  1    302482  ultralytics.nn.modules.head.v10Detect        [1, [128]]
+#YOLOv10sLight summary: 142 layers, 4,930,866 parameters, 4,930,850 gradients, 19.4 GFLOPs
