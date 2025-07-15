@@ -89,19 +89,24 @@ project/
 │   ├── YOLOv12sLight050.yaml       # YOLOv12 Light 0.5
 │   ├── YOLOv12sLightP3P4.yaml      # YOLOv12 Light P3P4
 │   ├── YOLOv12sLightP3P4050.yaml   # YOLOv12 Light P3P4 0.5
-│   ├── YOLOv12sLightP3P4AA.yaml    # YOLOv12 Light P3P4 AA
 │   ├── YOLOv12sNormal.yaml         # YOLOv12 Normal
-│   ├── YOLOv12sSM.yaml             # YOLOv12 SM
 │   ├── YOLOv12sTurbo.yaml          # YOLOv12 Turbo
-│   ├── YOLOv12sULT.yaml            # YOLOv12 Ultra
 │   └── YOLOv12sUltraLight.yaml     # YOLOv12 Ultra Light
 ├── dataset_configs/                 # Configurazioni dataset
 │   ├── d3_gray_dataset.yaml        # Dataset D3 Gray
 │   └── DVM_1_Grey_dataset.yaml     # Dataset DVM-1 Grey
 ├── weights/                         # Pesi preaddestrati
-│   ├── yolov10s.pt                 # Pesi YOLOv10s
-│   ├── yolov12s.pt                 # Pesi YOLOv12s
-│   └── best.pt                     # Altri pesi personalizzati
+│   ├── YOLOv10sLight_d3_grey_cuda22_best.pt
+│   ├── YOLOv10sLightTest2_d3_gray_dataset_best.pt
+│   ├── YOLOv12sLight_d3_gray_dataset_cuda18_best.pt
+│   ├── YOLOv12sLight_d3_grey_cuda22_best.pt
+│   ├── YOLOv12sLight_DVM_1_Grey_dataset_best.pt
+│   ├── YOLOv12sLight050_d3_gray_dataset_cuda22.pt
+│   ├── YOLOv12sLightP3P4_d3_gray_dataset.pt
+│   ├── YOLOv12sLightP3P4050_DVM_1_Grey_dataset_best.pt
+│   ├── YOLOv12sNormal_d3_gray_dataset_cuda22.pt
+│   ├── YOLOv12sTurbo_d3_gray_dataset_cuda18_best.pt
+│   └── YOLOv12sUltraLight_d3_gray_dataset_test.pt
 └── results/                        # Risultati addestramento (generata)
 ```
 
